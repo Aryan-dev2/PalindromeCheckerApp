@@ -1,7 +1,9 @@
 import java.util.Scanner;
 import java.util.Stack;
+import java.util.Queue;
+import java.util.LinkedList;
 
-public class UseCase5PalindromeCheckerApp {
+public class UseCase6PalindromeCheckerApp {
 
     public static void main(String[] args) {
 
@@ -9,22 +11,30 @@ public class UseCase5PalindromeCheckerApp {
         System.out.print("Enter a string: ");
         String word = scanner.nextLine();
 
-        // 1️⃣ Create Stack
+        // 1️⃣ Create Stack (LIFO)
         Stack<Character> stack = new Stack<>();
 
-        // 2️⃣ Push characters into stack
+        // 2️⃣ Create Queue (FIFO)
+        Queue<Character> queue = new LinkedList<>();
+
+        // 3️⃣ Insert characters into both
         for (int i = 0; i < word.length(); i++) {
-            stack.push(word.charAt(i));
+            stack.push(word.charAt(i));      // LIFO
+            queue.add(word.charAt(i));      // FIFO
         }
 
-        // 3️⃣ Pop and compare
-        String reversed = "";
+        boolean isPalindrome = true;
+
+        // 4️⃣ Compare pop() and dequeue()
         while (!stack.isEmpty()) {
-            reversed = reversed + stack.pop();
+            if (stack.pop() != queue.remove()) {
+                isPalindrome = false;
+                break;
+            }
         }
 
-        // 4️⃣ Check palindrome
-        if (word.equals(reversed)) {
+        // 5️⃣ Display result
+        if (isPalindrome) {
             System.out.println("It is a Palindrome");
         } else {
             System.out.println("It is NOT a Palindrome");

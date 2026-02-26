@@ -14,7 +14,7 @@ public class UseCase3PalindromeCheckerApp {
 
         for (int i = word.length() - 1; i >= 0; i--) {
             reversed = reversed + word.charAt(i);
-        }
+        }git checkout develop
 
         // Compare original and reversed
         if (word.equals(reversed)) {

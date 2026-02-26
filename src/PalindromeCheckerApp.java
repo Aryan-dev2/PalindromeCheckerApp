@@ -1,103 +1,28 @@
 import java.util.Scanner;
 
-public class PalindromeCheckerApp {
-
-    static final String APP_NAME = "Palindrome Checker App";
-    static final String VERSION = "Version 1.0";
+public class UseCase3PalindromeCheckerApp {
 
     public static void main(String[] args) {
 
-        // ------------------ UC1 ------------------
-        System.out.println("==================================");
-        System.out.println("Welcome to " + APP_NAME);
-        System.out.println(VERSION);
-        System.out.println("==================================");
-
+        // Take input from user
         Scanner scanner = new Scanner(System.in);
-        int choice;
+        System.out.print("Enter a string: ");
+        String word = scanner.nextLine();
 
-        do {
-            System.out.println("\nChoose an Option:");
-            System.out.println("1. Basic Palindrome Check");
-            System.out.println("2. Case-Insensitive Palindrome Check");
-            System.out.println("3. Ignore Spaces & Special Characters");
-            System.out.println("4. Hardcoded Palindrome (UC2)");
-            System.out.println("5. Exit");
-            System.out.print("Enter your choice: ");
+        // Reverse string using loop
+        String reversed = "";
 
-            choice = scanner.nextInt();
-            scanner.nextLine();
+        for (int i = word.length() - 1; i >= 0; i--) {
+            reversed = reversed + word.charAt(i);
+        }
 
-            switch (choice) {
-
-                case 1:
-                    System.out.print("Enter a string: ");
-                    String input1 = scanner.nextLine();
-                    if (isPalindromeBasic(input1)) {
-                        System.out.println("Result: It is a Palindrome (Case-Sensitive).");
-                    } else {
-                        System.out.println("Result: Not a Palindrome.");
-                    }
-                    break;
-
-                case 2:
-                    System.out.print("Enter a string: ");
-                    String input2 = scanner.nextLine();
-                    if (isPalindromeIgnoreCase(input2)) {
-                        System.out.println("Result: It is a Palindrome (Case-Insensitive).");
-                    } else {
-                        System.out.println("Result: Not a Palindrome.");
-                    }
-                    break;
-
-                case 3:
-                    System.out.print("Enter a string: ");
-                    String input3 = scanner.nextLine();
-                    if (isPalindromeAdvanced(input3)) {
-                        System.out.println("Result: It is a Valid Palindrome.");
-                    } else {
-                        System.out.println("Result: Not a Palindrome.");
-                    }
-                    break;
-
-                // ------------------ UC2 ------------------
-                case 4:
-                    String word = "madam";
-                    String reversed = new StringBuilder(word).reverse().toString();
-
-                    if (word.equals(reversed)) {
-                        System.out.println(word + " is a Palindrome");
-                    } else {
-                        System.out.println(word + " is NOT a Palindrome");
-                    }
-                    break;
-
-                case 5:
-                    System.out.println("Thank you for using " + APP_NAME + "!");
-                    break;
-
-                default:
-                    System.out.println("Invalid choice.");
-            }
-
-        } while (choice != 5);
+        // Compare original and reversed
+        if (word.equals(reversed)) {
+            System.out.println("It is a Palindrome");
+        } else {
+            System.out.println("It is NOT a Palindrome");
+        }
 
         scanner.close();
     }
-
-    public static boolean isPalindromeBasic(String str) {
-        String reversed = new StringBuilder(str).reverse().toString();
-        return str.equals(reversed);
-    }
-
-    public static boolean isPalindromeIgnoreCase(String str) {
-        String reversed = new StringBuilder(str).reverse().toString();
-        return str.equalsIgnoreCase(reversed);
-    }
-
-    public static boolean isPalindromeAdvanced(String str) {
-        String cleaned = str.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
-        String reversed = new StringBuilder(cleaned).reverse().toString();
-        return cleaned.equals(reversed);
-    }
-}git checkout develop
+}

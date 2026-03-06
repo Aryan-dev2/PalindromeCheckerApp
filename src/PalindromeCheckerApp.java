@@ -1,35 +1,62 @@
-class PalindromeChecker {
+import java.util.*;
 
-    // Method to check palindrome
+interface PalindromeStrategy {
+    boolean checkPalindrome(String str);
+}
+
+// Strategy 1: Using Stack
+class StackStrategy implements PalindromeStrategy {
+
     public boolean checkPalindrome(String str) {
 
-        int start = 0;
-        int end = str.length() - 1;
+        Stack<Character> stack = new Stack<>();
 
-        while (start < end) {
+        for (char c : str.toCharArray()) {
+            stack.push(c);
+        }
 
-            if (str.charAt(start) != str.charAt(end)) {
+        for (char c : str.toCharArray()) {
+            if (c != stack.pop()) {
                 return false;
             }
-
-            start++;
-            end--;
         }
 
         return true;
     }
 }
 
-public class UseCase11PalindromeCheckerApp {
+// Strategy 2: Using Deque
+class DequeStrategy implements PalindromeStrategy {
+
+    public boolean checkPalindrome(String str) {
+
+        Deque<Character> deque = new ArrayDeque<>();
+
+        for (char c : str.toCharArray()) {
+            deque.addLast(c);
+        }
+
+        while (deque.size() > 1) {
+            if (deque.removeFirst() != deque.removeLast()) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+}
+
+public class UseCase12PalindromeCheckerApp {
 
     public static void main(String[] args) {
 
         String input = "madam";
 
-        // Creating object of PalindromeChecker
-        PalindromeChecker checker = new PalindromeChecker();
+        // Choose strategy dynamically
+        PalindromeStrategy strategy = new StackStrategy();
+        // PalindromeStrategy strategy = new DequeStrategy();
 
-        if (checker.checkPalindrome(input)) {
+        if (strategy.checkPalindrome(input)) {
             System.out.println("Palindrome");
         } else {
             System.out.println("Not a Palindrome");

@@ -1,65 +1,46 @@
-import java.util.*;
+public class UseCase13PalindromeCheckerApp {
 
-interface PalindromeStrategy {
-    boolean checkPalindrome(String str);
-}
+    // Algorithm 1: Two Pointer Method
+    public static boolean isPalindromeTwoPointer(String str) {
+        int start = 0;
+        int end = str.length() - 1;
 
-// Strategy 1: Using Stack
-class StackStrategy implements PalindromeStrategy {
-
-    public boolean checkPalindrome(String str) {
-
-        Stack<Character> stack = new Stack<>();
-
-        for (char c : str.toCharArray()) {
-            stack.push(c);
-        }
-
-        for (char c : str.toCharArray()) {
-            if (c != stack.pop()) {
+        while (start < end) {
+            if (str.charAt(start) != str.charAt(end)) {
                 return false;
             }
+            start++;
+            end--;
         }
-
         return true;
     }
-}
 
-// Strategy 2: Using Deque
-class DequeStrategy implements PalindromeStrategy {
-
-    public boolean checkPalindrome(String str) {
-
-        Deque<Character> deque = new ArrayDeque<>();
-
-        for (char c : str.toCharArray()) {
-            deque.addLast(c);
-        }
-
-        while (deque.size() > 1) {
-            if (deque.removeFirst() != deque.removeLast()) {
-                return false;
-            }
-        }
-
-        return true;
+    // Algorithm 2: Reverse String Method
+    public static boolean isPalindromeReverse(String str) {
+        String reversed = new StringBuilder(str).reverse().toString();
+        return str.equals(reversed);
     }
-}
-
-public class UseCase12PalindromeCheckerApp {
 
     public static void main(String[] args) {
 
         String input = "madam";
 
-        // Choose strategy dynamically
-        PalindromeStrategy strategy = new StackStrategy();
-        // PalindromeStrategy strategy = new DequeStrategy();
+        // Measure time for Two Pointer
+        long start1 = System.nanoTime();
+        boolean result1 = isPalindromeTwoPointer(input);
+        long end1 = System.nanoTime();
 
-        if (strategy.checkPalindrome(input)) {
-            System.out.println("Palindrome");
-        } else {
-            System.out.println("Not a Palindrome");
-        }
+        // Measure time for Reverse Method
+        long start2 = System.nanoTime();
+        boolean result2 = isPalindromeReverse(input);
+        long end2 = System.nanoTime();
+
+        System.out.println("Two Pointer Result: " + result1);
+        System.out.println("Execution Time: " + (end1 - start1) + " ns");
+
+        System.out.println();
+
+        System.out.println("Reverse Method Result: " + result2);
+        System.out.println("Execution Time: " + (end2 - start2) + " ns");
     }
 }

@@ -1,6 +1,7 @@
-public class PalindromeCheckerApp {
+class PalindromeChecker {
 
-    static boolean isPalindrome(String str) {
+    // Method to check palindrome
+    public boolean checkPalindrome(String str) {
 
         int start = 0;
         int end = str.length() - 1;
@@ -17,15 +18,18 @@ public class PalindromeCheckerApp {
 
         return true;
     }
+}
+
+public class UseCase11PalindromeCheckerApp {
 
     public static void main(String[] args) {
 
-        String input = "Madam In Eden Im Adam";
+        String input = "madam";
 
-        // Normalize string
-        String normalized = input.toLowerCase().replaceAll("\\s+", "");
+        // Creating object of PalindromeChecker
+        PalindromeChecker checker = new PalindromeChecker();
 
-        if (isPalindrome(normalized)) {
+        if (checker.checkPalindrome(input)) {
             System.out.println("Palindrome");
         } else {
             System.out.println("Not a Palindrome");

@@ -1,45 +1,93 @@
-import java.util.Scanner;
-import java.util.Stack;
-import java.util.Queue;
-import java.util.LinkedList;
+class Node {
+    char data;
+    Node next;
 
-public class UseCase6PalindromeCheckerApp {
+    Node(char data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+
+public class PalindromeCheckerApp {
+
+    static Node head;
+
+    // Insert characters into linked list
+    static void insert(char c) {
+        Node newNode = new Node(c);
+
+        if (head == null) {
+            head = newNode;
+            return;
+        }
+
+        Node temp = head;
+        while (temp.next != null) {
+            temp = temp.next;
+        }
+
+        temp.next = newNode;
+    }
+
+    // Reverse linked list
+    static Node reverse(Node node) {
+        Node prev = null;
+        Node current = node;
+        Node next;
+
+        while (current != null) {
+            next = current.next;
+            current.next = prev;
+            prev = current;
+            current = next;
+        }
+
+        return prev;
+    }
+
+    // Check palindrome
+    static boolean isPalindrome() {
+
+        if (head == null || head.next == null)
+            return true;
+
+        Node slow = head;
+        Node fast = head;
+
+        // Find middle
+        while (fast.next != null && fast.next.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        // Reverse second half
+        Node secondHalf = reverse(slow.next);
+
+        Node firstHalf = head;
+
+        // Compare halves
+        while (secondHalf != null) {
+            if (firstHalf.data != secondHalf.data)
+                return false;
+
+            firstHalf = firstHalf.next;
+            secondHalf = secondHalf.next;
+        }
+
+        return true;
+    }
 
     public static void main(String[] args) {
 
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter a string: ");
-        String word = scanner.nextLine();
+        String str = "madam";   // change input if needed
 
-        // 1️⃣ Create Stack (LIFO)
-        Stack<Character> stack = new Stack<>();
-
-        // 2️⃣ Create Queue (FIFO)
-        Queue<Character> queue = new LinkedList<>();
-
-        // 3️⃣ Insert characters into both
-        for (int i = 0; i < word.length(); i++) {
-            stack.push(word.charAt(i));      // LIFO
-            queue.add(word.charAt(i));      // FIFO
+        for (int i = 0; i < str.length(); i++) {
+            insert(str.charAt(i));
         }
 
-        boolean isPalindrome = true;
-
-        // 4️⃣ Compare pop() and dequeue()
-        while (!stack.isEmpty()) {
-            if (stack.pop() != queue.remove()) {
-                isPalindrome = false;
-                break;
-            }
-        }
-
-        // 5️⃣ Display result
-        if (isPalindrome) {
-            System.out.println("It is a Palindrome");
-        } else {
-            System.out.println("It is NOT a Palindrome");
-        }
-
-        scanner.close();
+        if (isPalindrome())
+            System.out.println("Palindrome");
+        else
+            System.out.println("Not a Palindrome");
     }
 }
